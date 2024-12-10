@@ -1,0 +1,163 @@
+/* General Body Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Header Styling */
+  header {
+    background-color: #DFEB76; /* Yellow */
+    color: black;
+    padding: 2rem;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  nav button {
+    margin: 0 50px;
+    padding: 25px 70px;
+    background-color: #F05794;
+    color: white;
+    font-size: 18px; /* Increased text size */
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  /* Title Section Styling */
+  #title {
+    margin-top: 250px; /* Adds space between the header and title */
+    margin-bottom: 0px;
+    font-size: 70px;
+    font-weight: bold;
+    color: #0d137e;
+    text-align: center;
+  }
+  
+  /* Footer Styling */
+  footer {
+    background-color: #DFEB76; /* Yellow */
+    color: black;
+    padding: 1rem;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  footer button {
+    background-color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Main Content Styling */
+  main {
+    padding-top: 180px; /* Adjusted to include space for the title */
+    padding-bottom: 100px; /* To prevent overlap with the footer */
+    height: calc(100% - 280px); /* Adjust height to account for the title, header, and footer */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  /* Instructions Section */
+  #instructions {
+    background-color: #6583FB; /* Blue */
+    color: white;
+    padding: 50px;
+    margin: 20px 0;
+    width: 90%;
+    text-align: center;
+    border-radius: 5px;
+  }
+  
+  /* Workspace Container */
+  #workspace-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    width: 90%;
+    height: 100%;
+  }
+  
+  /* Simulation Section */
+  #simulation {
+    flex: 1;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+  }
+  
+  #sim-view {
+    flex: 1;
+    width: 100%;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  #sim-buttons button {
+    margin: 5px;
+    padding: 10px;
+    border: none;
+    background-color: #57F061;
+    color: black;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  /* Code Editor Section */
+  #code-editor {
+    flex: 1;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+  
+  #blocklyDiv {
+    flex: 1;
+    width: 100%;
+    height: 300px;
+    border: 1px solid #ccc;
+  }
+  
+  #code-editor button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #57F061;
+    color: black;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
