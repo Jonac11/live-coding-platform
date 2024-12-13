@@ -1,16 +1,39 @@
 const express = require('express');
+const fs = require('fs');
+const { exec } = require('child_process');
+
 const app = express();
-const path = require('path');
-const port = 3000;
+const PORT = 3000;
 
-// Serve static files
-app.use(express.static('public'));
+// Middleware to parse text/plain requests
+app.use(express.text());
 
-// Route for blocklyWork.html
-app.get('/blockly', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/blocklyWork.html'));
+// Route to handle code upload and execution
+app.post('/upload', (req, res) => {
+  try {
+    // Save the received Python code to a file
+    const pythonCode = req.body;
+    const filePath = 'uploaded_code.py';
+
+    fs.writeFileSync(filePath, pythonCode);
+
+    // Execute the Python code (make sure Python is installed and accessible)
+    exec(`python3 ${filePath}`, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error executing Python code: ${stderr}`);
+        return res.status(500).send(`Execution Error: ${stderr}`);
+      }
+
+      console.log(`Python code executed successfully:\n${stdout}`);
+      res.send(`Output:\n${stdout}`);
+    });
+  } catch (error) {
+    console.error('Error handling code upload:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });

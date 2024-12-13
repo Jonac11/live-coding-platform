@@ -1,12 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import './styles.css';
+import { createRoot } from 'react-dom/client'; // For React 18+
+import React from 'react'; // Core React library
+import App from './App'; // Import your App component
+import './styles.css'; // Import global styles (optional)
 
-window.changeView = (angle) => {
-    alert(`Switching to ${angle}`);
-};
+const container = document.getElementById('root'); // Target the root div in index.html
+const root = createRoot(container); // Create React root for rendering
 
-
-
-ReactDOM.render(<App />, document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);

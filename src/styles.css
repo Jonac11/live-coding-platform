@@ -1,163 +1,200 @@
 /* General Body Styling */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  html, body {
-    height: 100%;
-    font-family: Arial, sans-serif;
-  }
-  
-  /* Header Styling */
-  header {
-    background-color: #DFEB76; /* Yellow */
-    color: black;
-    padding: 2rem;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-  }
-  
-  nav button {
-    margin: 0 50px;
-    padding: 25px 70px;
-    background-color: #F05794;
-    color: white;
-    font-size: 18px; /* Increased text size */
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  /* Title Section Styling */
-  #title {
-    margin-top: 250px; /* Adds space between the header and title */
-    margin-bottom: 0px;
-    font-size: 50px;
-    font-weight: bold;
-    color: #0d137e;
-    text-align: center;
-  }
-  
-  /* Footer Styling */
-  footer {
-    background-color: #DFEB76; /* Yellow */
-    color: black;
-    padding: 1rem;
-    text-align: center;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-  }
-  
-  footer button {
-    background-color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  /* Main Content Styling */
-  main {
-    padding-top: 180px; /* Adjusted to include space for the title */
-    padding-bottom: 100px; /* To prevent overlap with the footer */
-    height: calc(100% - 280px); /* Adjust height to account for the title, header, and footer */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-  }
-  
-  /* Instructions Section */
-  #instructions {
-    background-color: #6583FB; /* Blue */
-    color: white;
-    padding: 60px;
-    margin: 20px 0;
-    width: 90%;
-    text-align: center;
-    border-radius: 5px;
-  }
-  
-  /* Workspace Container */
-  #workspace-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 20px;
-    width: 90%;
-    height: 100%;
-  }
-  
-  /* Simulation Section */
-  #simulation {
-    flex: 1;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    height: 100%;
-  }
-  
-  #sim-view {
-    flex: 1;
-    width: 100%;
-    background-color: #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-  }
-  
-  #sim-buttons button {
-    margin: 5px;
-    padding: 10px;
-    border: none;
-    background-color: #57F061;
-    color: black;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  /* Code Editor Section */
-  #code-editor {
-    flex: 1;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-  }
-  
-  #blocklyDiv {
-    flex: 1;
-    width: 100%;
-    height: 300px;
-    border: 1px solid #ccc;
-  }
-  
-  #code-editor button {
-    margin-top: 5px;
-    padding: 5px;
-    background-color: #57F061;
-    color: black;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa; /* Light background for better contrast */
+}
+
+/* Header Styling */
+header {
+  background-color: #DFEB76; /* Yellow */
+  color: black;
+  padding: 2rem; /* Reduced padding for a tighter header */
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow for depth */
+}
+
+nav button {
+  margin: 0 20px;
+  padding: 15px 50px; /* Reduced padding for smaller buttons */
+  background-color: #F05794;
+  color: white;
+  font-size: 16px; /* Smaller font size for buttons */
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow for buttons */
+  transition: all 0.3s ease-in-out;
+}
+
+nav button:hover {
+  background-color: #d04882;
+  transform: translateY(-3px);
+}
+
+/* Title Section Styling */
+#title {
+  margin-top: 140px; /* Reduced space between the header and title */
+  font-size: 36px; /* Smaller title font size */
+  font-weight: bold;
+  color: #353985;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Subtle text shadow */
+}
+
+/* Footer Styling */
+footer {
+  background-color: #DFEB76;
+  color: black;
+  padding: 1rem;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow for depth */
+}
+
+footer button {
+  background-color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow */
+  transition: all 0.3s ease-in-out;
+}
+
+footer button:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-3px);
+}
+
+/* Main Content Styling */
+main {
+  padding-top: 120px; /* Reduced space between the header and content */
+  padding-bottom: 100px;
+  height: calc(100% - 220px); /* Adjusted height to account for header and footer */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Instructions Section */
+#instructions {
+  background-color: #6583FB; /* Blue */
+  color: white;
+  padding: 40px; /* Reduced padding for a tighter instruction box */
+  margin: 12px 0; /* Reduced margin between elements */
+  width: 90%;
+  text-align: center;
+  border-radius: 10px; /* Softer corners */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Adds shadow */
+}
+
+/* Workspace Container */
+#workspace-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  width: 90%;
+  height: 100%;
+}
+
+/* Simulation Section */
+#simulation {
+  flex: 1;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow */
+}
+
+#sim-view {
+  flex: 1;
+  width: 100%;
+  background-color: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  border-radius: 10px; /* Softer corners */
+  box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.1); /* Inner shadow */
+}
+
+#sim-buttons button {
+  margin: 5px;
+  padding: 10px;
+  border: none;
+  background-color: #57F061;
+  color: black;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow */
+  transition: all 0.3s ease-in-out;
+}
+
+#sim-buttons button:hover {
+  background-color: #4adc57;
+  transform: translateY(-2px);
+}
+
+/* Code Editor Section */
+#code-editor {
+  flex: 1;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow */
+}
+
+#blocklyDiv {
+  flex: 1;
+  width: 100%;
+  height: 300px;
+  border: 1px solid #ccc;
+  border-radius: 10px; /* Softer corners */
+  box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.1); /* Inner shadow */
+}
+
+#code-editor button {
+  margin-top: 5px;
+  padding: 5px;
+  background-color: #57F061;
+  color: black;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow */
+  transition: all 0.3s ease-in-out;
+}
+
+#code-editor button:hover {
+  background-color: #4adc57;
+  transform: translateY(-2px);
+}
