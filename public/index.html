@@ -17,39 +17,167 @@
   </header>
 
   <div id="title">
-    <p>K-12 Live Coding Platform</p>
+    <h1>K-12 Live Coding Platform</h1>
   </div>
 
-  
   <main>
+    <!-- Instructions Section -->
     <section id="instructions">
       <h2>Instructions</h2>
       <p>Here you will provide detailed instructions for the user.</p>
     </section>
+
+    <!-- Workspace Container -->
     <div id="workspace-container">
       <!-- Simulation Section -->
       <div id="simulation">
-        <div id="sim-view">
-          <p>Simulation View</p>
+        <h3>Simulation Area</h3>
+        <div id="sim-view" style="width: 400px; height: 200px; background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+          <p>No simulation connected</p>
         </div>
         <div id="sim-buttons">
           <button onclick="changeView('angle1')">View Angle 1</button>
           <button onclick="changeView('angle2')">View Angle 2</button>
         </div>
       </div>
+
       <!-- Coding Section -->
       <div id="code-editor">
-        <div id="blocklyDiv"></div>
+        <h3>Code Editor</h3>
+        <div id="blocklyDiv" style="height: 300px; width: 600px;"></div>
+        <textarea id="pythonCode" rows="10" cols="50" placeholder="Generated Python code will appear here..."></textarea>
+        <button onclick="generateCode()">Generate Python</button>
         <button onclick="runCode()">Run Code</button>
       </div>
     </div>
   </main>
+
   <footer>
     <button>Back</button>
   </footer>
+
+  <!-- Blockly and Custom Scripts -->
   <script src="blockly/blockly_compressed.js"></script>
   <script src="blockly/blocks_compressed.js"></script>
-  <script src="blockly/javascript_compressed.js"></script>
-  <script src="../src/blockly-config.js"></script>
+  <script src="blockly/python_compressed.js"></script>
+  <script>
+    // Define Blockly Blocks
+    Blockly.Blocks['move_forward'] = {
+      init: function() {
+        this.appendDummyInput().appendField("Move Forward");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(100);
+      }
+    };
+
+    Blockly.Blocks['move_backward'] = {
+      init: function() {
+        this.appendDummyInput().appendField("Move Backward");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(100);
+      }
+    };
+
+    Blockly.Blocks['turn_left'] = {
+      init: function() {
+        this.appendDummyInput().appendField("Turn Left");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(70);
+      }
+    };
+
+    Blockly.Blocks['turn_right'] = {
+      init: function() {
+        this.appendDummyInput().appendField("Turn Right");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(70);
+      }
+    };
+
+    Blockly.Blocks['stop'] = {
+      init: function() {
+        this.appendDummyInput().appendField("Stop");
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setColour(0);
+      }
+    };
+
+    // Define Python Generators
+    Blockly.Python['move_forward'] = function(block) {
+      return 'px.forward(30)\ntime.sleep(1)\n';
+    };
+
+    Blockly.Python['move_backward'] = function(block) {
+      return 'px.backward(30)\ntime.sleep(1)\n';
+    };
+
+    Blockly.Python['turn_left'] = function(block) {
+      return 'px.set_dir_servo_angle(-35)\ntime.sleep(0.01)\n';
+    };
+
+    Blockly.Python['turn_right'] = function(block) {
+      return 'px.set_dir_servo_angle(35)\ntime.sleep(0.01)\n';
+    };
+
+    Blockly.Python['stop'] = function(block) {
+      return 'px.stop()\n';
+    };
+
+    // Initialize Blockly
+    const workspace = Blockly.inject('blocklyDiv', {
+      toolbox: `<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox">
+        <category name="Logic">
+          <block type="controls_if"></block>
+          <block type="logic_compare"></block>
+        </category>
+        <category name="Loops">
+          <block type="controls_repeat_ext"></block>
+        </category>
+        <category name="Math">
+          <block type="math_number"></block>
+          <block type="math_arithmetic"></block>
+        </category>
+        <category name="Car Movement">
+          <block type="move_forward"></block>
+          <block type="move_backward"></block>
+          <block type="turn_left"></block>
+          <block type="turn_right"></block>
+          <block type="stop"></block>
+        </category>
+      </xml>`
+    });
+
+    // Generate Python Code
+    function generateCode() {
+      const pythonCode = Blockly.Python.workspaceToCode(workspace);
+      document.getElementById('pythonCode').value = pythonCode;
+      console.log(pythonCode);
+    }
+
+    // Send Python Code to Backend
+    async function runCode() {
+      const pythonCode = document.getElementById('pythonCode').value;
+      try {
+        const response = await fetch('http://192.168.1.101:5000/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: pythonCode,
+        });
+        if (response.ok) {
+          alert('Code executed successfully!');
+        } else {
+          alert(`Error: ${await response.text()}`);
+        }
+      } catch (err) {
+        console.error('Error:', err);
+        alert('Failed to execute the code.');
+      }
+    }
+  </script>
 </body>
 </html>
