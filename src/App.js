@@ -1,5 +1,5 @@
 import React from "react";
-import BlocklyComponent from "./components/BlocklyComponent";
+import BlocklyComponent from "./BlocklyComponent";
 import "./styles.css"; // Make sure your styles are imported here
 
 const App = () => {
