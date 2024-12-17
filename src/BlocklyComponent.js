@@ -63,7 +63,7 @@ const BlocklyComponent = () => {
   const runCode = async () => {
     if (pythonCode) {
       try {
-        const response = await fetch('http://192.168.1.148:5000/upload', {
+        const response = await fetch('http://192.168.1.100:5000/upload', {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain' },
           body: pythonCode,
