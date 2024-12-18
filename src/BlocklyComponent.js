@@ -52,21 +52,28 @@ const BlocklyComponent = () => {
 
   // Function to generate Python code
   const generateCode = () => {
+
     if (workspaceRef.current) {
-      const code = pythonGenerator.workspaceToCode(workspaceRef.current);
+      var code = pythonGenerator.workspaceToCode(workspaceRef.current);
       setPythonCode(code);
       console.log('Generated Python Code:\n', code);
+      console.log('Log of  PythonCode:\n', pythonCode);
+      return code;
     }
   };
 
   // Function to "Run Code" (send to backend server)
   const runCode = async () => {
-    if (pythonCode) {
+
+    
+    var scriptPy = generateCode();
+
+    if (scriptPy) {
       try {
-        const response = await fetch('http://192.168.1.148:5000/upload', {
+        const response = await fetch('http://192.168.1.100:5000/upload', {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain' },
-          body: pythonCode,
+          body: scriptPy,
         });
 
         if (response.ok) {
@@ -92,19 +99,19 @@ const BlocklyComponent = () => {
       <div
         ref={blocklyDivRef}
         id="blocklyDiv"
-        style={{ height: '400px', width: '100%' }}
+        style={{ height: '400px', width: '200%' }}
       ></div>
 
       {/* Buttons */}
       <div style={{ marginTop: '10px' }}>
-        <button onClick={generateCode} style={{ marginRight: '10px' }}>
+        <button hidden  onClick={generateCode} style={{ marginRight: '10px' }}>
           Generate Code
         </button>
         <button onClick={runCode}>Run Code</button>
       </div>
 
       {/* Python Code Display */}
-      <textarea
+      <textarea hidden 
         readOnly
         value={pythonCode}
         placeholder="Generated Python code will appear here..."
