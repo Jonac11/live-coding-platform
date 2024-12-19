@@ -18,24 +18,24 @@ The Web-Based Live Coding Platform is an educational tool designed to teach K-12
 
 ## Installation
 Steps to Install & Test
-1. Clone the Repository
-Begin by downloading the project repository to your local machine or Raspberry Pi. This will provide the source code and all necessary files.
-2. Install Node.js
-Ensure that Node.js is installed. It is required to manage and run the front-end application.
-3. Install Python and Flask
-Install Python and Flask, as these are essential for running the backend server.
-4. Install Front-End Dependencies
-Navigate to the front-end directory and install all the required dependencies for the React application to function properly.
-5. Install Flask Backend Dependencies
-Navigate to the backend directory and set up the necessary Python packages to enable the Flask server to operate.
-6. Set Up Raspberry Pi
-If deploying on a Raspberry Pi, ensure the device is updated, and configure the Flask server to run on the Pi's IP address for accessibility.
-7. Run the Flask Backend Server
-Start the backend Flask server so it can handle requests and interact with the front-end.
-8. Run the React Front-End Application
-Start the React application to load the user interface, which will communicate with the Flask backend.
-9. Access the Application
-Open a browser and navigate to the front-end application running on the Raspberry Pi, ensuring it is correctly connected to the backend server.
+1. ### Clone the Repository
+- Begin by downloading the project repository to your local machine or Raspberry Pi. This will provide the source code and all necessary files.
+2. ### Install Node.js
+- Ensure that Node.js is installed. It is required to manage and run the front-end application.
+3. ### Install Python and Flask
+- Install Python and Flask, as these are essential for running the backend server.
+4. ### Install Front-End Dependencies
+- Navigate to the front-end directory and install all the required dependencies for the React application to function properly.
+5. ### Install Flask Backend Dependencies
+- Navigate to the backend directory and set up the necessary Python packages to enable the Flask server to operate.
+6. ### Set Up Raspberry Pi
+- If deploying on a Raspberry Pi, ensure the device is updated, and configure the Flask server to run on the Pi's IP address for accessibility.
+7. ### Run the Flask Backend Server
+- Start the backend Flask server so it can handle requests and interact with the front-end.
+8. ### Run the React Front-End Application
+- Start the React application to load the user interface, which will communicate with the Flask backend.
+9. ### Access the Application
+- Open a browser and navigate to the front-end application running on the Raspberry Pi, ensuring it is correctly connected to the backend server.
 
 ## Technologies Used
 **Front end**:
@@ -57,20 +57,20 @@ Open a browser and navigate to the front-end application running on the Raspberr
 
 ## Usage
 
-How to Use
-Create Code:
-Open the platform in your browser.
-Drag and drop blocks in the Blockly workspace to create Python code.
-The code editor includes categories like:
-Logic: If-else conditions.
-Loops: Repeat actions.
-Math: Perform arithmetic operations.
-Car Movement: Move Forward, Backward, Turn Left, Turn Right, Stop.
-Run Code:
-Click the "Run Code" button to send the generated Python code to the Flask server.
-The server processes the code and sends instructions to the RC car via the Raspberry Pi.
-Control the RC Car:
-Watch the RC car execute the movements defined in your code in real-time.
+### How to Use
+**Create Code:**
+- Open the platform in your browser.
+- Drag and drop blocks in the Blockly workspace to create Python code.
+**The code editor includes categories like:**
+**Logic:** If-else conditions.
+**Loops:** Repeat actions.
+**Math:** Perform arithmetic operations.
+**Car Movement:** Move Forward, Backward, Turn Left, Turn Right, Stop.
+**Run Code:**
+- Click the "Run Code" button to send the generated Python code to the Flask server.
+- The server processes the code and sends instructions to the RC car via the Raspberry Pi.
+**Control the RC Car:**
+- Watch the RC car execute the movements defined in your code in real-time.
 
 ## Features
 
@@ -113,7 +113,7 @@ https://github.com/user-attachments/assets/7e71a878-c321-4b40-830d-9d410a956f0e
 
 ## Changelog
 
-**Version 0.1**
+**Version 0.2**
 
 ## Conclusion
 Overall, first semester work was quite challenging but our team has set a base line for Senior Design II where we plan to complete the following as well as refine and revise what we have currently finished: 
