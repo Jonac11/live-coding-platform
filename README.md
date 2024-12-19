@@ -58,17 +58,23 @@ Steps to Install & Test
 ## Usage
 
 ### How to Use
+
 **Create Code:**
 - Open the platform in your browser.
 - Drag and drop blocks in the Blockly workspace to create Python code.
 **The code editor includes categories like:**
+  
 **Logic:** If-else conditions.
+
 **Loops:** Repeat actions.
 **Math:** Perform arithmetic operations.
+
 **Car Movement:** Move Forward, Backward, Turn Left, Turn Right, Stop.
+
 **Run Code:**
 - Click the "Run Code" button to send the generated Python code to the Flask server.
 - The server processes the code and sends instructions to the RC car via the Raspberry Pi.
+
 **Control the RC Car:**
 - Watch the RC car execute the movements defined in your code in real-time.
 
