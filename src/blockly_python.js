@@ -61,16 +61,6 @@ export const definePythonBlocks = () => {
     },
   };
 
-  Blockly.Blocks['delay'] = {
-    init: function () {
-      this.appendDummyInput().appendField('Delay');
-      this.setPreviousStatement(true, null);
-      this.setNextStatement(true, null);
-      this.setColour(0);
-      this.setTooltip('Stop Car');
-    },
-  };
-
   Blockly.Blocks['forever_loop'] = {
     init: function () {
       this.appendDummyInput().appendField('For Forever');
