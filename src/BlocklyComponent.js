@@ -22,22 +22,39 @@ const BlocklyComponent = () => {
               <block type="controls_if"></block>
               <block type="logic_compare"></block>
             </category>
+
             <category name="Loops">
               <block type="controls_repeat_ext"></block>
+              <block type="forever_loop"></block>
             </category>
+
             <category name="Math">
               <block type="math_number"></block>
               <block type="math_arithmetic"></block>
             </category>
+
             <category name="Car Movement">
               <block type="move_forward"></block>
               <block type="move_backward"></block>
               <block type="turn_left"></block>
               <block type="turn_right"></block>
               <block type="stop"></block>
+              <block type="delay"></block>
+            </category>
+
+            <category name="Sensors">
+              <block type="detect_line"></block>
+              <block type="color_detected"></block>
+              <block type="line"></block>
+            </category>
+
+            <category name="Car Tracking">
+              <block type="follow_color"></block>
+              <block type="follow_line"></block>
+              <block type="follow_camera"></block>
             </category>
           </xml>
-        `,
+        `
       });
     }
 
