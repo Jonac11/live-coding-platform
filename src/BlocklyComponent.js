@@ -24,6 +24,7 @@ const BlocklyComponent = () => {
             </category>
             <category name="Loops">
               <block type="controls_repeat_ext"></block>
+                <block type="forever_loop"></block>
             </category>
             <category name="Math">
               <block type="math_number"></block>
@@ -34,8 +35,17 @@ const BlocklyComponent = () => {
               <block type="move_backward"></block>
               <block type="turn_left"></block>
               <block type="turn_right"></block>
+              <block type="delay"></block>
               <block type="stop"></block>
             </category>
+            <category name="Sensors">
+              <block type="color_detected"></block>
+              <block type="face_detected"></block>
+              <block type="obstacle_detected"></block>
+              <block type="cliff_detected"></block>
+              <block type="detect_line"></block>
+              <block type="line"></block>
+        </category>
           </xml>
         `,
       });
@@ -104,14 +114,14 @@ const BlocklyComponent = () => {
 
       {/* Buttons */}
       <div style={{ marginTop: '10px' }}>
-        <button hidden  onClick={generateCode} style={{ marginRight: '10px' }}>
+        <button   onClick={generateCode} style={{ marginRight: '10px' }}>
           Generate Code
         </button>
         <button onClick={runCode}>Run Code</button>
       </div>
 
       {/* Python Code Display */}
-      <textarea hidden 
+      <textarea  
         readOnly
         value={pythonCode}
         placeholder="Generated Python code will appear here..."
