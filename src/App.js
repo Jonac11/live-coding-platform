@@ -1,5 +1,6 @@
 import React from "react";
 import BlocklyComponent from "./BlocklyComponent";
+import Simulation from "./simulation";
 import "./styles.css"; // Make sure your styles are imported here
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
 
       {/* Main Workspace */}
       <main>
+
         {/* Instructions Section */}
         <section id="instructions">
           <h2>Instructions</h2>
@@ -30,34 +32,10 @@ const App = () => {
 
         {/* Workspace Container */}
         <div id="workspace-container">
-          {/* Simulation Section */}
-          <div id="simulation">
-            <h3>Simulation Area</h3>
-            <div
-              id="sim-view"
-              style={{
-                width: "400px",
-                height: "200px",
-                backgroundColor: "#ddd",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <p>No simulation connected</p>
-            </div>
-            <div id="sim-buttons">
-              <button onClick={() => alert("View Angle 1")}>View Angle 1</button>
-              <button onClick={() => alert("View Angle 2")}>View Angle 2</button>
-            </div>
-          </div>
-
-          {/* Blockly Coding Section */}
-          <div id="code-editor">
-            <h3>Code Editor</h3>
-            <BlocklyComponent />
-          </div>
+          <Simulation />
+          <BlocklyComponent />
         </div>
+        
       </main>
 
       {/* Footer Section */}

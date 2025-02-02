@@ -109,8 +109,8 @@ main {
 /* Workspace Container */
 #workspace-container {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
+
   gap: 20px;
   width: 90%;
   height: 100%;
@@ -159,42 +159,51 @@ main {
   transform: translateY(-2px);
 }
 
-/* Code Editor Section */
-#code-editor {
-  flex: 1;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+/* Make sure the workspace takes up the full width */
+.blockly-workspace {
+  width: 100%; /* Allow it to fill the available width */
+  height: 100%; /* Allow it to take full available height */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow */
+  align-items: stretch; /* Ensure that all child elements (workspace, buttons) stretch */
 }
 
-#blocklyDiv {
-  flex: 1;
-  width: 100%;
-  height: 300px;
+/* Ensure that the blockly workspace is properly sized */
+.blockly-div {
+  width: 100%; /* Full width of the container */
+  height: 400px; /* Set an appropriate height, adjust as needed */
   border: 1px solid #ccc;
-  border-radius: 10px; /* Softer corners */
-  box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.1); /* Inner shadow */
+  border-radius: 10px;
+  box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional inner shadow for styling */
+  background-color: #fff;
 }
 
-#code-editor button {
-  margin-top: 5px;
-  padding: 5px;
+/* Optional: Style the buttons */
+button {
+  margin-top: 10px;
+  padding: 10px 20px;
   background-color: #57F061;
   color: black;
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease-in-out;
 }
 
-#code-editor button:hover {
+button:hover {
   background-color: #4adc57;
   transform: translateY(-2px);
+}
+
+/* Style the code output area */
+.code-output {
+  width: 100%;
+  height: 150px;
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional inner shadow */
+  font-family: monospace;
 }

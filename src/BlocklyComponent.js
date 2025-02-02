@@ -109,30 +109,28 @@ const BlocklyComponent = () => {
   };
 
   return (
-    <div>
+    <div className="blockly-workspace">
       <h2>Blockly Workspace</h2>
 
       {/* Blockly Workspace */}
       <div
         ref={blocklyDivRef}
         id="blocklyDiv"
-        style={{ height: '400px', width: '200%' }}
+        className='blockly-div'
       ></div>
 
-      {/* Buttons */}
-      <div style={{ marginTop: '10px' }}>
-        <button hidden  onClick={generateCode} style={{ marginRight: '10px' }}>
-          Generate Code
-        </button>
+      {/* generate & run code buttons */}
+      <div>
+        <button onClick={generateCode} className="gen-code">Generate Code</button>
         <button onClick={runCode}>Run Code</button>
       </div>
 
-      {/* Python Code Display */}
-      <textarea hidden 
+      {/* code output */}
+      <textarea
+        className='code-output'
         readOnly
         value={pythonCode}
         placeholder="Generated Python code will appear here..."
-        style={{ width: '100%', height: '150px', marginTop: '20px' }}
       ></textarea>
     </div>
   );

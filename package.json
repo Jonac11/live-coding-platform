@@ -16,7 +16,7 @@
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.26.3",
     "babel-loader": "^9.2.1",
-    "blockly": "^11.1.1",
+    "blockly": "^11.2.1",
     "express": "^4.21.2",
     "html-webpack-plugin": "^5.6.3",
     "react": "^19.0.0",
