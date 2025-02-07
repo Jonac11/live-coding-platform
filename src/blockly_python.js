@@ -177,12 +177,12 @@ export const definePythonBlocks = () => {
 
   pythonGenerator.forBlock['color_detected'] = function (block) {
     const dropdownColor = block.getFieldValue('COLOR');
-    return `detect_color(${dropdownColor})`;
+    return [`detect_color(${dropdownColor})`, pythonGenerator.ORDER_ATOMIC];
   };
 
   pythonGenerator.forBlock['line'] = function (block) {
     const dropdownState = block.getFieldValue('STATE');
-    return `gm_state == ${dropdownState}`;
+    return [`gm_state == ${dropdownState}`, pythonGenerator.ORDER_ATOMIC];
   };
 
   pythonGenerator.forBlock['follow_color'] = function () {

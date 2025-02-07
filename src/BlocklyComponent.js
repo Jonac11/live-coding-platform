@@ -68,20 +68,17 @@ const BlocklyComponent = () => {
 
   // Function to generate Python code
   const generateCode = () => {
-
     if (workspaceRef.current) {
       var code = pythonGenerator.workspaceToCode(workspaceRef.current);
       setPythonCode(code);
       console.log('Generated Python Code:\n', code);
-      console.log('Log of  PythonCode:\n', pythonCode);
+      console.log('Log of PythonCode:\n', pythonCode);
       return code;
     }
   };
 
   // Function to "Run Code" (send to backend server)
   const runCode = async () => {
-
-    
     var scriptPy = generateCode();
 
     if (scriptPy) {
@@ -108,30 +105,28 @@ const BlocklyComponent = () => {
   };
 
   return (
-    <div>
+    <div className="blockly-workspace">
       <h2>Blockly Workspace</h2>
 
       {/* Blockly Workspace */}
       <div
         ref={blocklyDivRef}
         id="blocklyDiv"
-        style={{ height: '400px', width: '200%' }}
+        className='blockly-div'
       ></div>
 
-      {/* Buttons */}
-      <div style={{ marginTop: '10px' }}>
-        <button hidden  onClick={generateCode} style={{ marginRight: '10px' }}>
-          Generate Code
-        </button>
+      {/* Generate & Run Code Buttons */}
+      <div>
+        <button onClick={generateCode} className="gen-code">Generate Code</button>
         <button onClick={runCode}>Run Code</button>
       </div>
 
-      {/* Python Code Display */}
-      <textarea hidden 
+      {/* Code Output */}
+      <textarea
+        className='code-output'
         readOnly
         value={pythonCode}
         placeholder="Generated Python code will appear here..."
-        style={{ width: '100%', height: '150px', marginTop: '20px' }}
       ></textarea>
     </div>
   );
