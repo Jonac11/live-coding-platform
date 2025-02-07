@@ -69,20 +69,17 @@ const BlocklyComponent = () => {
 
   // Function to generate Python code
   const generateCode = () => {
-
     if (workspaceRef.current) {
       var code = pythonGenerator.workspaceToCode(workspaceRef.current);
       setPythonCode(code);
       console.log('Generated Python Code:\n', code);
-      console.log('Log of  PythonCode:\n', pythonCode);
+      console.log('Log of PythonCode:\n', pythonCode);
       return code;
     }
   };
 
   // Function to "Run Code" (send to backend server)
   const runCode = async () => {
-
-    
     var scriptPy = generateCode();
 
     if (scriptPy) {
@@ -119,13 +116,13 @@ const BlocklyComponent = () => {
         className='blockly-div'
       ></div>
 
-      {/* generate & run code buttons */}
+      {/* Generate & Run Code Buttons */}
       <div>
         <button onClick={generateCode} className="gen-code">Generate Code</button>
         <button onClick={runCode}>Run Code</button>
       </div>
 
-      {/* code output */}
+      {/* Code Output */}
       <textarea
         className='code-output'
         readOnly

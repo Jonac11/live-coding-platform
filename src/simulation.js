@@ -11,8 +11,8 @@ const Simulation = () => {
             </div>
 
             <div id="sim-buttons">
-                <button onClick={() => alert("View Angle 1")}>View Angle 1</button>
-                <button onClick={() => alert("View Angle 2")}>View Angle 2</button>
+                <button onClick={() => alert("View Angle 1")}>Simulation</button>
+                <button onClick={() => alert("View Angle 2")}>Vizualizer</button>
             </div>
             
         </div>

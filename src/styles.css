@@ -1,3 +1,4 @@
+
 /* General Body Styling */
 * {
   margin: 0;
@@ -206,4 +207,175 @@ button:hover {
   border-radius: 5px;
   box-shadow: inset 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional inner shadow */
   font-family: monospace;
+}
+
+/* Tutorials Page Styling */
+.tutorials-page {
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.tutorials-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #1f1080;
+  margin-top: 100px; /* Adjust spacing */
+}
+
+/* Section Styling */
+.section {
+  background: white;
+  padding: 20px;
+  margin: 15px auto;
+  border-radius: 8px;
+  width: 80%;
+  text-align: left;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Tutorials List */
+.tutorial-list {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.tutorial-card {
+  width: 150px;
+  text-align: center;
+}
+
+.tutorial-card img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* View More */
+.view-more {
+  text-align: center;
+  color: gray;
+  font-style: italic;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Examples */
+.example-list {
+  display: flex;
+  justify-content: space-around;
+}
+
+.example-box {
+  width: 120px;
+  height: 60px;
+  background: #a9b3ff;
+  border-radius: 8px;
+}
+
+/* Practice Exercises */
+.practice-list {
+  display: flex;
+  justify-content: space-around;
+}
+
+.practice-box {
+  width: 150px;
+  height: 100px;
+  background: #a16bd9;
+  border-radius: 8px;
+  padding: 10px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.practice-title {
+  font-weight: bold;
+}
+
+.practice-desc {
+  font-style: italic;
+}
+
+/* Resources */
+.resource-list {
+  display: flex;
+  justify-content: space-around;
+}
+
+.resource-btn {
+  background: #98f78b;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.resource-btn:hover {
+  background: #7dd77a;
+}
+
+/* Home Page (Dashboard) Styling */
+.home-page {
+  padding: 20px;
+  text-align: center;
+}
+.dashboard-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2c2c2c;
+  margin-top: 100px; /* Adjust spacing */
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+  
+  text-align: left;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+/* Tasks Section */
+.tasks-section {
+  width: 48%;
+}
+
+.task-card {
+  background: #6583FB; /* Blue */
+  color: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+.task-title {
+  font-weight: bold;
+}
+
+.task-desc {
+  font-style: italic;
+}
+
+/* Notifications Section */
+.notifications-section {
+  width: 48%;
+}
+
+.notification-card {
+  background: #6ff494; /* Green */
+  padding: 20px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
 }
