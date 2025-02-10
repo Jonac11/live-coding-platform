@@ -188,27 +188,27 @@ export const definePythonBlocks = () => {
 
   // Python Generators
   pythonGenerator.forBlock['move_forward'] = function () {
-    return 'px.forward(30)\ntime.sleep(1)\n';
+    return 'move_forward()\n';
   };
 
   pythonGenerator.forBlock['move_backward'] = function () {
-    return 'px.backward(30)\ntime.sleep(1)\n';
+    return 'move_backward()\n';
   };
 
   pythonGenerator.forBlock['turn_left'] = function () {
-    return 'px.set_dir_servo_angle(-35)\ntime.sleep(0.01)\n';
+    return 'turn_left()\n';
   };
 
   pythonGenerator.forBlock['turn_right'] = function () {
-    return 'px.set_dir_servo_angle(35)\ntime.sleep(0.01)\n';
+    return 'turn_right\n';
   };
 
   pythonGenerator.forBlock['stop'] = function () {
-    return 'px.stop()\n';
+    return 'stop()\n';
   };
 
   pythonGenerator.forBlock['delay'] = function () {
-    return 'time.sleep(0.5)\n';
+    return 'delay()\n';
   };
 
   pythonGenerator.forBlock['color_detected'] = function (block) {
@@ -222,16 +222,17 @@ export const definePythonBlocks = () => {
   };
 
   pythonGenerator.forBlock['face_detected'] = function () {
-    return 'detect_face()\n';
+    return ['detect_face()', pythonGenerator.ORDER_ATOMIC];
   };
 
   pythonGenerator.forBlock['cliff_detected'] = function () {
-    return 'detect_cliff()\n';
+    return ['detect_cliff()', pythonGenerator.ORDER_ATOMIC];
   };
 
   pythonGenerator.forBlock['obstacle_detected'] = function () {
-    return 'detect_obstacle()\n';
+    return ['detect_obstacle()', pythonGenerator.ORDER_ATOMIC];
   };
+
 
 
 
@@ -249,7 +250,7 @@ export const definePythonBlocks = () => {
   };
 
   pythonGenerator.forBlock['detect_line'] = function () {
-    return 'gm_val_list = px.get_grayscale_data()\ngm_state = get_status(gm_val_list)\n';
+    return 'detect_line()\n';
   };
 
   pythonGenerator.forBlock['forever_loop'] = function (block) {
