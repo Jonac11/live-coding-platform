@@ -114,13 +114,13 @@ export const definePythonBlocks = () => {
   Blockly.Blocks['line'] = {
     init: function () {
       this.appendDummyInput()
-        .appendField('Line is')
+        .appendField('Car is')
         .appendField(
           new Blockly.FieldDropdown([
-            ['Ahead', '"forward"'],
-            ['Right', '"right"'],
-            ['Left', '"left"'],
-            ['Absent', '"stop"'],
+            ['On Line', '"forward"'],
+            ['Left of Line', '"right"'],
+            ['Right of Line', '"left"'],
+            ['Off Line', '"stop"'],
           ]),
           'STATE'
         );
@@ -129,6 +129,42 @@ export const definePythonBlocks = () => {
       this.setTooltip('Checks if the specified line is detected.');
     },
   };
+
+  Blockly.Blocks['face_detected'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("Face Detected");
+      this.setOutput(true, "Boolean");
+      this.setColour(280);
+      this.setTooltip("Checks if a face is detected.");
+      this.setHelpUrl("");
+    }
+  };
+
+  Blockly.Blocks['obstacle_detected'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("Obstacle Detected");
+      this.setOutput(true, "Boolean");
+      this.setColour(280);
+      this.setTooltip("Checks if a face is detected.");
+      this.setHelpUrl("");
+    }
+  };
+
+
+  Blockly.Blocks['cliff_detected'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField("Cliff Detected");
+      this.setOutput(true, "Boolean");
+      this.setColour(280);
+      this.setTooltip("Checks if a face is detected.");
+      this.setHelpUrl("");
+    }
+  };
+
+
 
   Blockly.Blocks['follow_color'] = {
     init: function () {
@@ -194,6 +230,21 @@ export const definePythonBlocks = () => {
     const dropdownState = block.getFieldValue('STATE');
     return [`gm_state == ${dropdownState}`, pythonGenerator.ORDER_ATOMIC];
   };
+
+  pythonGenerator.forBlock['face_detected'] = function () {
+    return 'detect_face()\n';
+  };
+
+  pythonGenerator.forBlock['cliff_detected'] = function () {
+    return 'detect_cliff()\n';
+  };
+
+  pythonGenerator.forBlock['obstacle_detected'] = function () {
+    return 'detect_obstacle()\n';
+  };
+
+
+
 
   pythonGenerator.forBlock['follow_color'] = function () {
     return 'followColor()\n';
