@@ -43,14 +43,11 @@ const BlocklyComponent = () => {
 
             <category name="Sensors">
               <block type="detect_line"></block>
-              <block type="color_detected"></block>
               <block type="line"></block>
-            </category>
-
-            <category name="Car Tracking">
-              <block type="follow_color"></block>
-              <block type="follow_line"></block>
-              <block type="follow_camera"></block>
+              <block type="color_detected"></block>
+              <block type="face_detected"></block>
+              <block type="obstacle_detected"></block>
+              <block type="cliff_detected"></block>
             </category>
           </xml>
         `
