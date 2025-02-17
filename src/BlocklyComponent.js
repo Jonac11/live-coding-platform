@@ -80,7 +80,7 @@ const BlocklyComponent = () => {
 
     if (scriptPy) {
       try {
-        const response = await fetch('http://192.168.1.100:5000/upload', {
+        const response = await fetch('http://172.20.10.3:5001/upload', {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain' },
           body: scriptPy,
