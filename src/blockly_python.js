@@ -13,21 +13,21 @@ export const definePythonBlocks = () => {
   // Custom Blocks
   Blockly.Blocks['move_forward'] = {
     init: function () {
-      this.appendDummyInput().appendField('Move Forward');
+      this.appendValueInput("DISTANCE").setCheck("Number").appendField('Move Forward');
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(100);
-      this.setTooltip('Move forward at speed of 30');
+      this.setTooltip('Move forward by selected number of feet. If no input, move forward continously');
     },
   };
 
   Blockly.Blocks['move_backward'] = {
     init: function () {
-      this.appendDummyInput().appendField('Move Backward');
+      this.appendValueInput("DISTANCE").setCheck("Number").appendField('Move Backward');
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(100);
-      this.setTooltip('Move backward at speed of 30');
+      this.setTooltip('Move backward by selected number of feet. If no input, move backward continously');
     },
   };
 
@@ -37,7 +37,7 @@ export const definePythonBlocks = () => {
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(70);
-      this.setTooltip('Turn left at angle of -35');
+      this.setTooltip('Turn left at an angle of 20°');
     },
   };
 
@@ -47,7 +47,7 @@ export const definePythonBlocks = () => {
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(70);
-      this.setTooltip('Turn right at angle of 35');
+      this.setTooltip('Turn right at an angle of 20°');
     },
   };
 
@@ -66,7 +66,7 @@ export const definePythonBlocks = () => {
       this.appendDummyInput().appendField('For Forever');
       this.appendStatementInput('DO').setCheck(null).appendField('do');
       this.setColour(120);
-      this.setTooltip('Infinite loop that repeatedly executes the "do" section.');
+      this.setTooltip('Infinite loop that repeatedly executes the "do" section');
     },
   };
 
@@ -76,7 +76,7 @@ export const definePythonBlocks = () => {
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(280);
-      this.setTooltip('Detect a line');
+      this.setTooltip('Detects a line');
     },
   };
 
@@ -97,7 +97,7 @@ export const definePythonBlocks = () => {
         );
       this.setOutput(true, 'Boolean');
       this.setColour(280);
-      this.setTooltip('Checks if the specified color is detected.');
+      this.setTooltip('Returns True if the specified color is detected');
     },
   };
 
@@ -116,7 +116,7 @@ export const definePythonBlocks = () => {
         );
       this.setOutput(true, 'Boolean');
       this.setColour(280);
-      this.setTooltip('Checks if the specified line is detected.');
+      this.setTooltip('Returns True if car is at the specified position');
     },
   };
 
@@ -126,7 +126,7 @@ export const definePythonBlocks = () => {
           .appendField("Face Detected");
       this.setOutput(true, "Boolean");
       this.setColour(280);
-      this.setTooltip("Checks if a face is detected.");
+      this.setTooltip("Returns True if a face is detected");
       this.setHelpUrl("");
     }
   };
@@ -137,7 +137,7 @@ export const definePythonBlocks = () => {
           .appendField("Obstacle Detected");
       this.setOutput(true, "Boolean");
       this.setColour(280);
-      this.setTooltip("Checks if a face is detected.");
+      this.setTooltip("Returns True if an obstacle is detected");
       this.setHelpUrl("");
     }
   };
@@ -149,7 +149,7 @@ export const definePythonBlocks = () => {
           .appendField("Cliff Detected");
       this.setOutput(true, "Boolean");
       this.setColour(280);
-      this.setTooltip("Checks if a face is detected.");
+      this.setTooltip("Returns True if a cliff is detected");
       this.setHelpUrl("");
     }
   };
@@ -187,12 +187,16 @@ export const definePythonBlocks = () => {
   };
 
   // Python Generators
-  pythonGenerator.forBlock['move_forward'] = function () {
-    return 'move_forward()\n';
+  pythonGenerator.forBlock['move_forward'] = function (block) {
+    const distanceBlock = block.getInputTargetBlock('DISTANCE');
+    const dist = distanceBlock ? distanceBlock.getFieldValue('NUM') : 0;
+    return `move_forward(${dist})\n`;
   };
 
-  pythonGenerator.forBlock['move_backward'] = function () {
-    return 'move_backward()\n';
+  pythonGenerator.forBlock['move_backward'] = function (block) {
+    const distanceBlock = block.getInputTargetBlock('DISTANCE');
+    const dist = distanceBlock ? distanceBlock.getFieldValue('NUM') : 0;
+    return `move_backward(${dist})\n`;
   };
 
   pythonGenerator.forBlock['turn_left'] = function () {

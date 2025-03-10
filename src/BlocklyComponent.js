@@ -35,7 +35,18 @@ const BlocklyComponent = () => {
 
             <category name="Car Movement">
               <block type="move_forward"></block>
+              <value name="DISTANCE">
+                <block type="math_number">
+                  <field name="NUM">100</field>
+                </block>
+              </value>
+              
               <block type="move_backward"></block>
+                <value name="DISTANCE">
+                <block type="math_number">
+                  <field name="NUM">100</field>
+                </block>
+              </value>
               <block type="turn_left"></block>
               <block type="turn_right"></block>
               <block type="stop"></block>
