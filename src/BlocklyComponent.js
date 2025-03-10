@@ -49,6 +49,7 @@ const BlocklyComponent = () => {
               </value>
               <block type="turn_left"></block>
               <block type="turn_right"></block>
+              <block type= "center"></block>
               <block type="stop"></block>
             </category>
 

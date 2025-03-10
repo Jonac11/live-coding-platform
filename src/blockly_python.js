@@ -60,6 +60,15 @@ export const definePythonBlocks = () => {
       this.setTooltip('Stop Car');
     },
   };
+  Blockly.Blocks['center'] = {
+    init: function () {
+      this.appendDummyInput().appendField('Center');
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setColour(70);
+      this.setTooltip('Turns car to face the center');
+    },
+  };
 
   Blockly.Blocks['forever_loop'] = {
     init: function () {
@@ -209,6 +218,10 @@ export const definePythonBlocks = () => {
 
   pythonGenerator.forBlock['stop'] = function () {
     return 'stop()\n';
+  };
+
+  pythonGenerator.forBlock['center'] = function () {
+    return 'center()\n';
   };
 
   pythonGenerator.forBlock['delay'] = function () {
