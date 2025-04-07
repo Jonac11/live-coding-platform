@@ -5,14 +5,18 @@ import { definePythonBlocks } from './blockly_python';
 
 const BlocklyComponent = () => {
   const [pythonCode, setPythonCode] = useState('');
+  const [connectionStatus, setConnectionStatus] = useState(null); // Track WebSocket connection status
+
   const blocklyDivRef = useRef(null); // Reference to the Blockly div
   const workspaceRef = useRef(null);  // Keep track of the Blockly workspace
+  const socketRef = useRef(null); // WebSocket reference
+  
 
   useEffect(() => {
-    // Define custom blocks only once
+    // defining custom blockly blocks
     definePythonBlocks();
 
-    // Prevent multiple initializations
+    // prevent multiple initializations
     if (!workspaceRef.current) {
       // Inject Blockly workspace
       workspaceRef.current = Blockly.inject(blocklyDivRef.current, {
@@ -66,14 +70,51 @@ const BlocklyComponent = () => {
       });
     }
 
-    // Cleanup function to dispose of the workspace
+    // Cleanup function to dispose of the workspace/websocket connection
     return () => {
-      if (workspaceRef.current) {
-        workspaceRef.current.dispose();
-        workspaceRef.current = null;
+      if (socketRef.current) {
+        socketRef.current.close();
       }
     };
   }, []);
+
+  const connectCar = () => {
+    const carIp = '192.168.1.118';
+    const port = 9090;
+
+    // If a WebSocket connection already exists, close it first
+    if (socketRef.current) {
+      socketRef.current.close();
+      setConnectionStatus('Disconnected');
+      console.log('Closed previous connection');
+    }
+
+    // Attempt to establish a new WebSocket connection
+    socketRef.current = new WebSocket(`ws://${carIp}:${port}`);
+    
+    socketRef.current.onopen = () => {
+      setConnectionStatus('Connected to car!');
+      console.log('Successfully connected to car via WebSocket');
+    };
+
+    //if error, log
+    socketRef.current.onerror = (error) => {
+      setConnectionStatus('Failed to connect to car.');
+      console.error('WebSocket error:', error);
+    };
+    
+    //receive message from the car's server
+    socketRef.current.onmessage = (event) => {
+      console.log('Message from server:', event.data);
+      alert(`Response from car: ${event.data}`);
+    };
+    
+    //closing connection
+    socketRef.current.onclose = () => {
+      setConnectionStatus('Connection closed.');
+      console.log('WebSocket connection closed');
+    };
+  };
 
   // Function to generate Python code
   const generateCode = () => {
@@ -87,31 +128,32 @@ const BlocklyComponent = () => {
   };
 
   // Function to "Run Code" (send to backend server)
-  const runCode = async () => {
+  const runCode = () => {
     var scriptPy = generateCode();
 
     if (scriptPy) {
       try {
-        const response = await fetch('http://172.20.10.3:5001/upload', {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain' },
-          body: scriptPy,
-        });
-
-        if (response.ok) {
-          const result = await response.json();
-          alert(`Code executed successfully:\n${result.output}`);
-        } else {
-          alert('Error running code. Check server logs.');
-        }
-      } catch (error) {
-        console.error('Error sending code to server:', error);
-        alert('Failed to connect to the server.');
+        
+        // Send Python code to WebSocket server
+        socketRef.current.send(scriptPy);
+        console.log('Sent Python code to WebSocket server:', scriptPy);
+        alert('Python code sent successfully to the car!');
+      } 
+      // error catching
+      catch (error) {
+        console.error('Error sending code via WebSocket:', error);
+        alert('Failed to send code via WebSocket.');
       }
     } else {
       alert('No code generated. Please generate code first!');
     }
   };
+
+  const stopCode = () => {
+    const stopMessage = "stop()"
+    socketRef.current.send(stopMessage);
+    console.log('Sent Python code to WebSocket server:', stopMessage);
+  }
 
   return (
     <div className="blockly-workspace">
@@ -128,7 +170,12 @@ const BlocklyComponent = () => {
       <div>
         <button onClick={generateCode} className="gen-code">Generate Code</button>
         <button onClick={runCode}>Run Code</button>
+        <button onClick={stopCode}>Stop Code</button>
+        <button onClick={connectCar}>Connect to Car</button>
       </div>
+
+      {/* Connection Status Feedback */}
+      <p>Status: {connectionStatus || 'Not connected'}</p>
 
       {/* Code Output */}
       <textarea

@@ -5,7 +5,7 @@ const Simulation = () => {
     const [isCameraConnected, setIsCameraConnected] = useState(true);  // checks if camera is connected
     const [key, setKey] = useState(0);  // forces iframe to refresh
 
-    const camUrl = "http://172.20.10.3:9000/mjpg";  // camera feed URL
+    const camUrl = "http://192.168.1.118:9090/mjpg";  // camera feed URL
 
     // check if the camera feed is available
     const pingCameraFeed = async () => {
