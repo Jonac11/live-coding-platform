@@ -1,136 +1,251 @@
-import React, { useState } from "react";
-import "./styles.css"; // Ensure styles are properly linked
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "./styles.css";
 
 const Tutorials = () => {
-  // State to store dynamic content
-  const [newMaterial, setNewMaterial] = useState([
-    { title: "Tutorial 6", image: "https://via.placeholder.com/150" },
-    { title: "Tutorial 5", image: "https://via.placeholder.com/150" },
-    { title: "Tutorial 4", image: "https://via.placeholder.com/150" }
-  ]);
+  const navigate = useNavigate();
 
-  const [examples, setExamples] = useState([]);
-  const [practiceExercises, setPracticeExercises] = useState([]);
-  const [resources, setResources] = useState([]);
+  const [videoPreviews, setVideoPreviews] = useState(() => {
+    return JSON.parse(localStorage.getItem("videoPreviews")) || [];
+  });
 
-  // State for input fields
-  const [newMaterialInput, setNewMaterialInput] = useState("");
-  const [examplesInput, setExamplesInput] = useState("");
-  const [practiceInput, setPracticeInput] = useState("");
-  const [resourceInput, setResourceInput] = useState("");
+  const [slidePreviews, setSlidePreviews] = useState(() => {
+    return JSON.parse(localStorage.getItem("slidePreviews")) || [];
+  });
 
-  // Functions to add content dynamically
-  const addNewMaterial = () => {
-    if (newMaterialInput.trim() !== "") {
-      setNewMaterial([...newMaterial, { title: newMaterialInput, image: "https://via.placeholder.com/150" }]);
-      setNewMaterialInput("");
+  const [assignments, setAssignments] = useState(() => {
+    const saved = JSON.parse(localStorage.getItem("assignments")) || [];
+    return saved.sort((a, b) => b.id - a.id);
+  });
+
+  const [videoFile, setVideoFile] = useState(null);
+  const [slideFile, setSlideFile] = useState(null);
+  const [assignmentTitle, setAssignmentTitle] = useState("");
+  const [assignmentDesc, setAssignmentDesc] = useState("");
+
+  const [showAllVideos, setShowAllVideos] = useState(false);
+  const [showAllSlides, setShowAllSlides] = useState(false);
+  const [showAllAssignments, setShowAllAssignments] = useState(false);
+  const [maximizedSlide, setMaximizedSlide] = useState(null); // Track maximized slides
+
+  // Save videos and slides to localStorage when state changes
+  useEffect(() => {
+    localStorage.setItem("videoPreviews", JSON.stringify(videoPreviews));
+    localStorage.setItem("slidePreviews", JSON.stringify(slidePreviews));
+    localStorage.setItem("assignments", JSON.stringify(assignments));
+  }, [videoPreviews, slidePreviews, assignments]);
+
+  const handleVideoUpload = () => {
+    if (videoFile) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const newVideo = {
+          id: Date.now(),
+          title: `Tutorial ${videoPreviews.length + 1}`,
+          url: reader.result, // base64
+        };
+        const updated = [newVideo, ...videoPreviews];
+        setVideoPreviews(updated);
+        setVideoFile(null);
+      };
+      reader.readAsDataURL(videoFile);
     }
   };
 
-  const addExample = () => {
-    if (examplesInput.trim() !== "") {
-      setExamples([...examples, examplesInput]);
-      setExamplesInput("");
+  const handleSlideUpload = () => {
+    if (slideFile) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        const url = reader.result;
+        const newSlide = {
+          id: Date.now(),
+          fileName: slideFile.name,
+          url,
+          isPDF: slideFile.type === "application/pdf"
+        };
+
+        const updated = [newSlide, ...slidePreviews];
+        setSlidePreviews(updated);
+        setSlideFile(null);
+      };
+
+      reader.readAsDataURL(slideFile);
     }
   };
 
-  const addPracticeExercise = () => {
-    if (practiceInput.trim() !== "") {
-      setPracticeExercises([...practiceExercises, practiceInput]);
-      setPracticeInput("");
+  const handlePostAssignment = () => {
+    if (assignmentTitle && assignmentDesc) {
+      const newAssignment = {
+        id: Date.now(),
+        title: assignmentTitle,
+        question: assignmentDesc
+      };
+      const updated = [newAssignment, ...assignments];
+      setAssignments(updated);
+      setAssignmentTitle("");
+      setAssignmentDesc("");
     }
   };
 
-  const addResource = () => {
-    if (resourceInput.trim() !== "") {
-      setResources([...resources, resourceInput]);
-      setResourceInput("");
-    }
+  const deleteAssignment = (id) => {
+    const updated = assignments.filter(a => a.id !== id);
+    setAssignments(updated);
+  };
+
+  const deleteVideo = (id) => {
+    const updated = videoPreviews.filter(v => v.id !== id);
+    setVideoPreviews(updated);
+  };
+
+  const deleteSlide = (index) => {
+    const updated = slidePreviews.filter((_, i) => i !== index);
+    setSlidePreviews(updated);
+  };
+
+  const renderPreviewLimit = (items, showAll) => showAll ? items : items.slice(0, 3);
+
+  const handleMaximizeSlide = (index) => {
+    setMaximizedSlide(index); // Toggle maximization
   };
 
   return (
     <div className="tutorials-page">
-      {/* Header Section */}
       <h1 className="title">Tutorials</h1>
-      
 
-      {/* Main Content */}
-      <div className="content">
-        {/* New Material Section */}
-        <section className="section">
-          <h2>New Material</h2>
-          <div className="tutorial-list">
-            {newMaterial.map((tutorial, index) => (
-              <div key={index} className="tutorial-card">
-                <img src={tutorial.image} alt={tutorial.title} />
-                <p>{tutorial.title}</p>
-              </div>
-            ))}
-          </div>
-          <input 
-            type="text" 
-            placeholder="Enter new tutorial title" 
-            value={newMaterialInput} 
-            onChange={(e) => setNewMaterialInput(e.target.value)} 
-            className="input-field"
-          />
-          <button className="create-btn" onClick={addNewMaterial}>Create</button>
-        </section>
+      {/* New Material (Videos) */}
+      <section className="section">
+        <h2>New Material (videos)</h2>
+        <div className="tutorial-list">
+          {renderPreviewLimit(videoPreviews, showAllVideos).map((video, idx) => (
+            <div key={video.id || idx} className="tutorial-card">
+              <video src={video.url} controls width="100%" />
+              <p>{video.title}</p>
+              <button className="delete-btn" onClick={() => deleteVideo(video.id)}>✖</button>
+            </div>
+          ))}
+        </div>
+        <input type="file" accept="video/*" onChange={e => setVideoFile(e.target.files[0])} />
+        <button className="create-btn" onClick={handleVideoUpload}>Upload Video</button>
+        {videoPreviews.length > 3 && (
+          <p className="view-more" onClick={() => setShowAllVideos(!showAllVideos)}>
+            {showAllVideos ? "View Less" : "View More"}
+          </p>
+        )}
+      </section>
 
-        {/* Examples Section */}
-        <section className="section">
-          <h2>Examples</h2>
-          <div className="example-list">
-            {examples.map((example, index) => (
-              <div key={index} className="example-box">{example}</div>
-            ))}
-          </div>
-          <input 
-            type="text" 
-            placeholder="Enter new example" 
-            value={examplesInput} 
-            onChange={(e) => setExamplesInput(e.target.value)} 
-            className="input-field"
-          />
-          <button className="create-btn" onClick={addExample}>Create</button>
-        </section>
+      {/* Material (Slides) */}
+      <section className="section">
+        <h2>Material (slides)</h2>
+        <div className="example-list">
+          {renderPreviewLimit(slidePreviews, showAllSlides).map((slide, idx) => (
+            <div key={slide.id || idx} className="example-box">
+              {maximizedSlide === idx ? (
+                <div className="full-screen-slide">
+                  {slide.isPDF ? (
+                    <iframe
+                      src={slide.url}
+                      title={`Slide ${idx + 1}`}
+                      width="100%"
+                      height="100%"
+                      style={{ border: "none" }}
+                    />
+                  ) : (
+                    <img
+                      src={slide.url}
+                      alt={`Slide ${idx + 1}`}
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                      }}
+                    />
+                  )}
+                  <button className="delete-btn" onClick={() => deleteSlide(idx)}>✖</button>
+                </div>
+              ) : (
+                <>
+                  {slide.isPDF ? (
+                    <iframe
+                      src={slide.url}
+                      title={`Slide ${idx + 1}`}
+                      width="100px"
+                      height="100px"
+                      style={{ border: "none" }}
+                    />
+                  ) : (
+                    <img
+                      src={slide.url}
+                      alt={`Slide ${idx + 1}`}
+                      className="slide-preview"
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                      }}
+                    />
+                  )}
+                  <button className="delete-btn" onClick={() => deleteSlide(idx)}>✖</button>
+                  <button
+                    className="maximize-btn"
+                    onClick={() => handleMaximizeSlide(idx)} // Toggle maximization
+                  >
+                    {maximizedSlide === idx ? "Minimize" : "Maximize"}
+                  </button>
+                </>
+              )}
+            </div>
+          ))}
+        </div>
+        <input type="file" accept="image/*,.pdf" onChange={e => setSlideFile(e.target.files[0])} />
+        <button className="create-btn" onClick={handleSlideUpload}>Upload Slide</button>
+        {slidePreviews.length > 3 && (
+          <p className="view-more" onClick={() => setShowAllSlides(!showAllSlides)}>
+            {showAllSlides ? "View Less" : "View More"}
+          </p>
+        )}
+      </section>
 
-        {/* Practice Exercises Section */}
-        <section className="section">
-          <h2>Practice Exercises</h2>
-          <div className="practice-list">
-            {practiceExercises.map((exercise, index) => (
-              <div key={index} className="practice-box">{exercise}</div>
-            ))}
-          </div>
-          <input 
-            type="text" 
-            placeholder="Enter new practice exercise" 
-            value={practiceInput} 
-            onChange={(e) => setPracticeInput(e.target.value)} 
-            className="input-field"
-          />
-          <button className="create-btn" onClick={addPracticeExercise}>Create</button>
-        </section>
+      {/* Assignments Posted */}
+      <section className="section">
+        <h2>Assignments posted</h2>
+        <input
+          type="text"
+          placeholder="Enter assignment title"
+          value={assignmentTitle}
+          onChange={e => setAssignmentTitle(e.target.value)}
+          className="input-field"
+        />
+        <textarea
+          placeholder="Enter assignment description"
+          value={assignmentDesc}
+          onChange={e => setAssignmentDesc(e.target.value)}
+          className="input-field"
+          rows={3}
+        />
+        <button className="create-btn" onClick={handlePostAssignment}>Post Assignment</button>
+        <div className="practice-list">
+          {renderPreviewLimit(assignments, showAllAssignments).map((assignment, index) => (
+            <div key={assignment.id} className="assignment-box">
+              <button className="delete-btn" onClick={() => deleteAssignment(assignment.id)}>✖</button>
+              <p className="assignment-title">{assignment.title}</p>
+              <p className="assignment-desc"><em>(description)</em> {assignment.question}</p>
+            </div>
+          ))}
+        </div>
+        {assignments.length > 3 && (
+          <p className="view-more" onClick={() => setShowAllAssignments(!showAllAssignments)}>
+            {showAllAssignments ? "View Less" : "View More"}
+          </p>
+        )}
+      </section>
 
-        {/* Resources Section */}
-        <section className="section">
-          <h2>Resources</h2>
-          <div className="resource-list">
-            {resources.map((resource, index) => (
-              <button key={index} className="resource-btn">{resource}</button>
-            ))}
-          </div>
-          <input 
-            type="text" 
-            placeholder="Enter new resource link" 
-            value={resourceInput} 
-            onChange={(e) => setResourceInput(e.target.value)} 
-            className="input-field"
-          />
-          <button className="create-btn" onClick={addResource}>Create</button>
-        </section>
-      </div>
+      {/* Open Practice */}
+      <section className="section">
+        <h2>Open practice</h2>
+        <button className="resource-btn" onClick={() => navigate("/")}>Open</button>
+        <p style={{ fontStyle: "italic", marginTop: "5px" }}>
+          This should take you to the main page where the students can play around with the code
+        </p>
+      </section>
     </div>
   );
 };
