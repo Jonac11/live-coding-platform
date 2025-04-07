@@ -213,7 +213,7 @@ export const definePythonBlocks = () => {
   };
 
   pythonGenerator.forBlock['turn_right'] = function () {
-    return 'turn_right\n';
+    return 'turn_right()\n';
   };
 
   pythonGenerator.forBlock['stop'] = function () {

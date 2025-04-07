@@ -3,7 +3,7 @@ import * as Blockly from 'blockly';
 import { pythonGenerator } from './blockly_python';
 import { definePythonBlocks } from './blockly_python';
 
-const BlocklyComponent = () => {
+const BlocklyComponent = ({ showCamera, executeInSimulation }) => {
   const [pythonCode, setPythonCode] = useState('');
   const [connectionStatus, setConnectionStatus] = useState(null); // Track WebSocket connection status
 
@@ -128,6 +128,7 @@ const BlocklyComponent = () => {
   };
 
   // Function to "Run Code" (send to backend server)
+<<<<<<< HEAD
   const runCode = () => {
     var scriptPy = generateCode();
 
@@ -143,11 +144,38 @@ const BlocklyComponent = () => {
       catch (error) {
         console.error('Error sending code via WebSocket:', error);
         alert('Failed to send code via WebSocket.');
+=======
+  const runCode = async () => {
+    const scriptPy = generateCode();
+  
+    if (scriptPy) {
+      if (!showCamera) { 
+        // When in simulation view, run commands locally via the turtle simulation
+        executeInSimulation(scriptPy);
+      } else {
+        // Camera view (actual RC car), send commands to Flask server
+        try {
+          const response = await fetch('http://172.20.10.3:5001/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain' },
+            body: scriptPy,
+          });
+  
+          if (response.ok) {
+            const result = await response.json();
+            alert(`Code executed successfully:\\n${result.output}`);
+          } else {
+            alert('Error running code. Check server logs.');
+          }
+        } catch (error) {
+          console.error('Error sending code to server:', error);
+          alert('Failed to connect to the server.');
+        }
+>>>>>>> 3ce47a2149bcb2295c7b4c45e122d85c98aba0f0
       }
-    } else {
-      alert('No code generated. Please generate code first!');
     }
   };
+  
 
   const stopCode = () => {
     const stopMessage = "stop()"

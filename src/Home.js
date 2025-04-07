@@ -1,12 +1,17 @@
 import React from "react";
 import "./styles.css"; // Ensure styles are properly linked
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  // Load assignments from localStorage
+  const assignments = JSON.parse(localStorage.getItem("assignments")) || [];
+
   return (
     <div className="home-page">
       {/* Header Section */}
       <h1 className="title">Home Page</h1>
-    
 
       {/* Main Content */}
       <div className="dashboard-container">
@@ -16,22 +21,21 @@ const Home = () => {
           {/* Left Column - Tasks */}
           <div className="tasks-section">
             <h3>Tasks</h3>
-            <div className="task-card"> 
-              <p className="task-title">Project 1</p>
-              <p className="task-desc">Description</p>
-            </div>
-            <div className="task-card"> 
-              <p className="task-title">Project 2</p>
-              <p className="task-desc">Description</p>
-            </div>
-            <div className="task-card"> 
-              <p className="task-title">Project 3</p>
-              <p className="task-desc">Description</p>
-            </div>
-            <div className="task-card"> 
-              <p className="task-title">Project 4</p>
-              <p className="task-desc">Description</p>
-            </div>
+            {assignments.length > 0 ? (
+              assignments.map((task) => (
+                <div 
+                  key={task.id} 
+                  className="task-card"
+                  onClick={() => navigate(`/?assignmentId=${task.id}`)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <p className="task-title">{task.title}</p>
+                  <p className="task-desc">Click to view</p>
+                </div>
+              ))
+            ) : (
+              <p>No assignments posted yet.</p>
+            )}
           </div>
 
           {/* Right Column - Notifications */}

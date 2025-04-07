@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
+import Turtle from './turtle';
 
-const Simulation = () => {
-    const [showCamera, setShowCamera] = useState(false);  // controls whether camera is visible
+const Simulation = forwardRef(({ showCamera }, ref) => {
     const [isCameraConnected, setIsCameraConnected] = useState(true);  // checks if camera is connected
     const [key, setKey] = useState(0);  // forces iframe to refresh
 
     const camUrl = "http://192.168.1.118:9090/mjpg";  // camera feed URL
+
+    const canvasRef = useRef(null);  // reference for the simulation canvas
+    const turtleRef = useRef(null);  // reference for the Turtle simulation instance
 
     // check if the camera feed is available
     const pingCameraFeed = async () => {
@@ -19,29 +22,40 @@ const Simulation = () => {
 
     // check camera connection periodically when feed is visible
     useEffect(() => {
-        let interval;
-
-        if (showCamera) {
-            interval = setInterval(() => {
-                pingCameraFeed();  // check connection
-            }, 5000);
+        if (!showCamera && canvasRef.current) {
+            turtleRef.current = new Turtle(canvasRef.current);
+            
+            // Ensure the canvas gets updated when switching views
+            setTimeout(() => {
+                const testCommands = `
+                    move_forward(2)
+                    turn_right()
+                    move_forward(1)
+                    turn_left()
+                    move_backward(3)
+                `;
+                turtleRef.current.executeCommands(testCommands);
+            }, 500);
         }
+    }, [showCamera]);
+    
 
-        return () => clearInterval(interval);  // cleanup when feed is hidden
+    // initialize the Turtle simulation when switching to simulation view
+    useEffect(() => {
+        if (!showCamera && canvasRef.current) {
+            turtleRef.current = new Turtle(canvasRef.current);
+            if (turtleRef.current.clear) { turtleRef.current.clear(); } // Clears the canvas before redrawing
+        }
     }, [showCamera]);
 
-    // show the camera feed and refresh it
-    const toggleCameraFeed = () => {
-        setShowCamera(true);
-        setKey(prevKey => prevKey + 1);  // refresh iframe
-        pingCameraFeed();  // initial check when feed is shown
-    };
-
-    // close the camera feed
-    const closeCameraFeed = () => {
-        setShowCamera(false);  // hide feed
-        setIsCameraConnected(true);  // reset connection status
-    };
+    // execute Blockly-generated commands in the simulation
+    useImperativeHandle(ref, () => ({
+        executeCommands: (commandString) => {
+            if (turtleRef.current && !showCamera) {
+                turtleRef.current.executeCommands(commandString);
+            }
+        }
+    }));
 
     return (
         <div id="simulation">
@@ -58,20 +72,28 @@ const Simulation = () => {
                                 height="480"
                                 onError={() => setIsCameraConnected(false)}  // handle error if feed fails
                             ></iframe>
-                            <button onClick={closeCameraFeed}>Close Camera</button>
                         </>
                     ) : (
-                        <>
-                            <p>Camera not connected</p>
-                            <button onClick={closeCameraFeed}>Close Camera</button>
-                        </>
+                        <p>Camera not connected</p>
                     )
                 ) : (
-                    <button onClick={toggleCameraFeed}>Open Camera Feed</button>
+                    <canvas
+                    ref={canvasRef}  // simulation canvas
+                    id="turtleCanvas"
+                    width="1300"
+                    height="1100"
+                    style={{ 
+                        border: '3px solid black', 
+                        backgroundImage: "url('/images/road.avif')",  
+                        backgroundSize: 'contain',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'center'
+                    }}
+                    ></canvas>
                 )}
             </div>
         </div>
     );
-};
+});
 
 export default Simulation;

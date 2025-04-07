@@ -1,65 +1,106 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, Link, useLocation } from "react-router-dom";
 import BlocklyComponent from "./BlocklyComponent";
 import Simulation from "./simulation";
 import Home from "./Home";
 import Tutorials from "./Tutorials";
-import "./styles.css"; // Make sure your styles are imported here
+import Assignment from "./Assignment";
+import "./styles.css";
 
-const App = () => {
+const MainPage = ({ assignment }) => {
+  const [showCamera, setShowCamera] = useState(false);
+  const simulationRef = useRef(null);
+
+  const executeInSimulation = (commands) => {
+    console.log("Blockly commands:", commands); 
+    if (simulationRef.current) {
+      simulationRef.current.executeCommands(commands);
+    }
+  };
+
   return (
-    <Router>
-      <div>
-        {/* Header Section */}
-        <header>
-          <nav>
-            <Link to="/"><button>Main</button></Link> {/* This keeps your existing page as default */}
-            <Link to="/home"><button>Home</button></Link>
-            <Link to="/tutorials"><button>Tutorials</button></Link>
-            <button>Results</button>
-            <button>Settings</button>
-          </nav>
-        </header>
+    <main>
+      {/* Instructions Section */}
+      <section id="instructions">
+        <h2>Instructions</h2>
+        {assignment ? (
+          <>
+            <h3>{assignment.title}</h3>
+            <p>{assignment.question}</p>
+          </>
+        ) : (
+          <p>Here you will provide detailed instructions for the user.</p>
+        )}
 
-        {/* Title Section */}
-        <div id="title">
-          <h1>K-12 Live Coding Platform</h1>
-        </div>
+        {/* Toggle View */}
+        <button onClick={() => setShowCamera(false)} style={{ backgroundColor: !showCamera ? 'lightblue' : 'grey' }}>Simulation View</button>
+        <button onClick={() => setShowCamera(true)} style={{ backgroundColor: showCamera ? 'lightblue' : 'grey' }}>Camera View</button>
+      </section>
 
-        {/* Routing for different pages */}
-        <Routes>
-          {/* Default page (Blockly & Simulation) remains as the main page */}
-          <Route 
-            path="/" 
-            element={
-              <main>
-                {/* Instructions Section */}
-                <section id="instructions">
-                  <h2>Instructions</h2>
-                  <p>Here you will provide detailed instructions for the user.</p>
-                </section>
-
-                {/* Workspace Container */}
-                <div id="workspace-container">
-                  <Simulation />
-                  <BlocklyComponent />
-                </div>
-              </main>
-            } 
-          />
-
-          {/* Additional Pages */}
-          <Route path="/home" element={<Home />} />
-          <Route path="/tutorials" element={<Tutorials />} />
-        </Routes>
-
-        {/* Footer Section */}
-        <footer>
-          <button onClick={() => alert("Going Back")}>Back</button>
-        </footer>
+      {/* Workspace */}
+      <div id="workspace-container">
+        <Simulation ref={simulationRef} showCamera={showCamera} />
+        <BlocklyComponent showCamera={showCamera} executeInSimulation={executeInSimulation} />
       </div>
-    </Router>
+    </main>
   );
 };
+
+const AppWrapper = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const assignmentId = queryParams.get("assignmentId");
+
+  const [assignment, setAssignment] = useState(null);
+
+  useEffect(() => {
+    if (assignmentId) {
+      const allAssignments = JSON.parse(localStorage.getItem("assignments")) || [];
+      const found = allAssignments.find(a => a.id.toString() === assignmentId);
+      setAssignment(found);
+    } else {
+      setAssignment(null);
+    }
+  }, [assignmentId]);
+
+  return (
+    <div>
+      {/* Header */}
+      <header>
+        <nav>
+          <Link to="/"><button>Main</button></Link>
+          <Link to="/home"><button>Home</button></Link>
+          <Link to="/tutorials"><button>Tutorials</button></Link>
+          <button>Results</button>
+          <button>Settings</button>
+        </nav>
+      </header>
+
+      {/* Title */}
+      <div id="title">
+        <h1>K-12 Live Coding Platform</h1>
+      </div>
+
+      {/* Routes */}
+      <Routes>
+        <Route path="/" element={<MainPage assignment={assignment} />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/tutorials" element={<Tutorials />} />
+        <Route path="/assignment/:id" element={<Assignment />} />
+      </Routes>
+
+      {/* Footer */}
+      <footer>
+        <button onClick={() => alert("Going Back")}>Back</button>
+      </footer>
+    </div>
+  );
+};
+
+const App = () => (
+  <Router>
+    <AppWrapper />
+  </Router>
+);
 
 export default App;
