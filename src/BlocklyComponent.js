@@ -81,6 +81,7 @@ const BlocklyComponent = ({ showCamera, executeInSimulation }) => {
 
   const connectCar = () => {
     const carIp = '192.168.1.118';
+    const carip2 = '172.20.10.3';
     const port = 9090;
 
     // If a WebSocket connection already exists, close it first
@@ -91,7 +92,7 @@ const BlocklyComponent = ({ showCamera, executeInSimulation }) => {
     }
 
     // Attempt to establish a new WebSocket connection
-    socketRef.current = new WebSocket(`ws://${carIp}:${port}`);
+    socketRef.current = new WebSocket(`ws://${carip2}:${port}`);
     
     socketRef.current.onopen = () => {
       setConnectionStatus('Connected to car!');
