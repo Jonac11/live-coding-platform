@@ -13,10 +13,10 @@ const BlocklyComponent = ({ showCamera, executeInSimulation }) => {
   
 
   useEffect(() => {
-    // defining custom blockly blocks
+    // Define custom blocks only once
     definePythonBlocks();
 
-    // prevent multiple initializations
+    // Prevent multiple initializations
     if (!workspaceRef.current) {
       // Inject Blockly workspace
       workspaceRef.current = Blockly.inject(blocklyDivRef.current, {
@@ -70,10 +70,11 @@ const BlocklyComponent = ({ showCamera, executeInSimulation }) => {
       });
     }
 
-    // Cleanup function to dispose of the workspace/websocket connection
+    // Cleanup function to dispose of the workspace
     return () => {
-      if (socketRef.current) {
-        socketRef.current.close();
+      if (workspaceRef.current) {
+        workspaceRef.current.dispose();
+        workspaceRef.current = null;
       }
     };
   }, []);
@@ -94,7 +95,7 @@ const BlocklyComponent = ({ showCamera, executeInSimulation }) => {
     
     socketRef.current.onopen = () => {
       setConnectionStatus('Connected to car!');
-      console.log('Successfully connected to car via WebSocket');
+      console.log('Successfully connected to REMOTE car via WebSocket');
     };
 
     //if error, log
@@ -116,6 +117,17 @@ const BlocklyComponent = ({ showCamera, executeInSimulation }) => {
     };
   };
 
+  const disconnectCar = () => {
+    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+      socketRef.current.close();
+      setConnectionStatus('Disconnected from car.');
+      console.log('Disconnected from car via button');
+    } else {
+      console.log('No active connection to disconnect.');
+    }
+  };
+  
+
   // Function to generate Python code
   const generateCode = () => {
     if (workspaceRef.current) {
@@ -128,50 +140,23 @@ const BlocklyComponent = ({ showCamera, executeInSimulation }) => {
   };
 
   // Function to "Run Code" (send to backend server)
-<<<<<<< HEAD
-  const runCode = () => {
-    var scriptPy = generateCode();
-
-    if (scriptPy) {
-      try {
-        
-        // Send Python code to WebSocket server
-        socketRef.current.send(scriptPy);
-        console.log('Sent Python code to WebSocket server:', scriptPy);
-        alert('Python code sent successfully to the car!');
-      } 
-      // error catching
-      catch (error) {
-        console.error('Error sending code via WebSocket:', error);
-        alert('Failed to send code via WebSocket.');
-=======
   const runCode = async () => {
     const scriptPy = generateCode();
   
     if (scriptPy) {
-      if (!showCamera) { 
+      if (!socketRef.current || socketRef.current.readyState !== WebSocket.OPEN) { 
         // When in simulation view, run commands locally via the turtle simulation
         executeInSimulation(scriptPy);
       } else {
         // Camera view (actual RC car), send commands to Flask server
         try {
-          const response = await fetch('http://172.20.10.3:5001/upload', {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain' },
-            body: scriptPy,
-          });
-  
-          if (response.ok) {
-            const result = await response.json();
-            alert(`Code executed successfully:\\n${result.output}`);
-          } else {
-            alert('Error running code. Check server logs.');
-          }
+          socketRef.current.send(scriptPy);
+          console.log('Sent Python code to WebSocket server:', scriptPy);
+          alert('Code sent to car successfully!');
         } catch (error) {
-          console.error('Error sending code to server:', error);
-          alert('Failed to connect to the server.');
+          console.error('Error sending code via WebSocket:', error);
+          alert('Failed to send code to the car.');
         }
->>>>>>> 3ce47a2149bcb2295c7b4c45e122d85c98aba0f0
       }
     }
   };
@@ -200,6 +185,8 @@ const BlocklyComponent = ({ showCamera, executeInSimulation }) => {
         <button onClick={runCode}>Run Code</button>
         <button onClick={stopCode}>Stop Code</button>
         <button onClick={connectCar}>Connect to Car</button>
+        <button onClick={disconnectCar}>Disconnect Car</button>
+
       </div>
 
       {/* Connection Status Feedback */}
