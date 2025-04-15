@@ -128,23 +128,6 @@ const BlocklyComponent = ({ showCamera, executeInSimulation }) => {
   };
 
   // Function to "Run Code" (send to backend server)
-<<<<<<< HEAD
-  const runCode = () => {
-    var scriptPy = generateCode();
-
-    if (scriptPy) {
-      try {
-        
-        // Send Python code to WebSocket server
-        socketRef.current.send(scriptPy);
-        console.log('Sent Python code to WebSocket server:', scriptPy);
-        alert('Python code sent successfully to the car!');
-      } 
-      // error catching
-      catch (error) {
-        console.error('Error sending code via WebSocket:', error);
-        alert('Failed to send code via WebSocket.');
-=======
   const runCode = async () => {
     const scriptPy = generateCode();
   
@@ -171,7 +154,6 @@ const BlocklyComponent = ({ showCamera, executeInSimulation }) => {
           console.error('Error sending code to server:', error);
           alert('Failed to connect to the server.');
         }
->>>>>>> 3ce47a2149bcb2295c7b4c45e122d85c98aba0f0
       }
     }
   };

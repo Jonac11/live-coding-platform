@@ -26,9 +26,8 @@ const Tutorials = () => {
   const [showAllVideos, setShowAllVideos] = useState(false);
   const [showAllSlides, setShowAllSlides] = useState(false);
   const [showAllAssignments, setShowAllAssignments] = useState(false);
-  const [maximizedSlide, setMaximizedSlide] = useState(null); // Track maximized slides
+  const [maximizedSlide, setMaximizedSlide] = useState(null);
 
-  // Save videos and slides to localStorage when state changes
   useEffect(() => {
     localStorage.setItem("videoPreviews", JSON.stringify(videoPreviews));
     localStorage.setItem("slidePreviews", JSON.stringify(slidePreviews));
@@ -42,7 +41,7 @@ const Tutorials = () => {
         const newVideo = {
           id: Date.now(),
           title: `Tutorial ${videoPreviews.length + 1}`,
-          url: reader.result, // base64
+          url: reader.result,
         };
         const updated = [newVideo, ...videoPreviews];
         setVideoPreviews(updated);
@@ -55,7 +54,6 @@ const Tutorials = () => {
   const handleSlideUpload = () => {
     if (slideFile) {
       const reader = new FileReader();
-
       reader.onloadend = () => {
         const url = reader.result;
         const newSlide = {
@@ -67,9 +65,9 @@ const Tutorials = () => {
 
         const updated = [newSlide, ...slidePreviews];
         setSlidePreviews(updated);
+        localStorage.setItem("slidePreviews", JSON.stringify(updated));
         setSlideFile(null);
       };
-
       reader.readAsDataURL(slideFile);
     }
   };
@@ -106,19 +104,18 @@ const Tutorials = () => {
   const renderPreviewLimit = (items, showAll) => showAll ? items : items.slice(0, 3);
 
   const handleMaximizeSlide = (index) => {
-    setMaximizedSlide(index); // Toggle maximization
+    setMaximizedSlide(index);
   };
 
   return (
     <div className="tutorials-page">
-      <h1 className="title">Tutorials</h1>
+      <h1 className="title"> </h1>
 
-      {/* New Material (Videos) */}
       <section className="section">
         <h2>New Material (videos)</h2>
         <div className="tutorial-list">
-          {renderPreviewLimit(videoPreviews, showAllVideos).map((video, idx) => (
-            <div key={video.id || idx} className="tutorial-card">
+          {renderPreviewLimit(videoPreviews, showAllVideos).map((video) => (
+            <div key={video.id} className="tutorial-card">
               <video src={video.url} controls width="100%" />
               <p>{video.title}</p>
               <button className="delete-btn" onClick={() => deleteVideo(video.id)}>✖</button>
@@ -134,61 +131,30 @@ const Tutorials = () => {
         )}
       </section>
 
-      {/* Material (Slides) */}
       <section className="section">
         <h2>Material (slides)</h2>
         <div className="example-list">
-          {renderPreviewLimit(slidePreviews, showAllSlides).map((slide, idx) => (
-            <div key={slide.id || idx} className="example-box">
-              {maximizedSlide === idx ? (
+          {renderPreviewLimit(slidePreviews, showAllSlides).map((slide) => (
+            <div key={slide.id} className="example-box">
+              {maximizedSlide === slide.id ? (
                 <div className="full-screen-slide">
                   {slide.isPDF ? (
-                    <iframe
-                      src={slide.url}
-                      title={`Slide ${idx + 1}`}
-                      width="100%"
-                      height="100%"
-                      style={{ border: "none" }}
-                    />
+                    <iframe src={slide.url} title={slide.fileName} width="100%" height="100%" style={{ border: "none" }} />
                   ) : (
-                    <img
-                      src={slide.url}
-                      alt={`Slide ${idx + 1}`}
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                      }}
-                    />
+                    <img src={slide.url} alt={slide.fileName} style={{ width: "100%", height: "auto" }} />
                   )}
-                  <button className="delete-btn" onClick={() => deleteSlide(idx)}>✖</button>
+                  <button className="delete-btn" onClick={() => deleteSlide(slide.id)}>✖</button>
                 </div>
               ) : (
                 <>
                   {slide.isPDF ? (
-                    <iframe
-                      src={slide.url}
-                      title={`Slide ${idx + 1}`}
-                      width="100px"
-                      height="100px"
-                      style={{ border: "none" }}
-                    />
+                    <iframe src={slide.url} title={slide.fileName} width="100px" height="100px" style={{ border: "none" }} />
                   ) : (
-                    <img
-                      src={slide.url}
-                      alt={`Slide ${idx + 1}`}
-                      className="slide-preview"
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                      }}
-                    />
+                    <img src={slide.url} alt={slide.fileName} className="slide-preview" style={{ width: "100px", height: "100px" }} />
                   )}
-                  <button className="delete-btn" onClick={() => deleteSlide(idx)}>✖</button>
-                  <button
-                    className="maximize-btn"
-                    onClick={() => handleMaximizeSlide(idx)} // Toggle maximization
-                  >
-                    {maximizedSlide === idx ? "Minimize" : "Maximize"}
+                  <button className="delete-btn" onClick={() => deleteSlide(slidePreviews.indexOf(slide))}>✖</button>
+                  <button className="maximize-btn" onClick={() => handleMaximizeSlide(slide.id)}>
+                    {maximizedSlide === slide.id ? "Minimize" : "Maximize"}
                   </button>
                 </>
               )}
@@ -204,26 +170,13 @@ const Tutorials = () => {
         )}
       </section>
 
-      {/* Assignments Posted */}
       <section className="section">
         <h2>Assignments posted</h2>
-        <input
-          type="text"
-          placeholder="Enter assignment title"
-          value={assignmentTitle}
-          onChange={e => setAssignmentTitle(e.target.value)}
-          className="input-field"
-        />
-        <textarea
-          placeholder="Enter assignment description"
-          value={assignmentDesc}
-          onChange={e => setAssignmentDesc(e.target.value)}
-          className="input-field"
-          rows={3}
-        />
+        <input type="text" placeholder="Enter assignment title" value={assignmentTitle} onChange={e => setAssignmentTitle(e.target.value)} className="input-field" />
+        <textarea placeholder="Enter assignment description" value={assignmentDesc} onChange={e => setAssignmentDesc(e.target.value)} className="input-field" rows={3} />
         <button className="create-btn" onClick={handlePostAssignment}>Post Assignment</button>
         <div className="practice-list">
-          {renderPreviewLimit(assignments, showAllAssignments).map((assignment, index) => (
+          {renderPreviewLimit(assignments, showAllAssignments).map((assignment) => (
             <div key={assignment.id} className="assignment-box">
               <button className="delete-btn" onClick={() => deleteAssignment(assignment.id)}>✖</button>
               <p className="assignment-title">{assignment.title}</p>
@@ -238,7 +191,6 @@ const Tutorials = () => {
         )}
       </section>
 
-      {/* Open Practice */}
       <section className="section">
         <h2>Open practice</h2>
         <button className="resource-btn" onClick={() => navigate("/")}>Open</button>

@@ -24,8 +24,8 @@ class Turtle {
             console.error(" this.image is undefined.");
         }
 
-        this.maxTurn = 35;
-        this.turnAmount = 35;
+        this.maxTurn = 45;
+        this.turnAmount = 45;
         this.initialAngleBeforeTurn = this.angle;
         this.carWidth = 60;
         this.carHeight = 50;
@@ -103,6 +103,12 @@ class Turtle {
     }
 
     executeCommands(commandString) {
+        this.x = this.canvas.width / 2;
+        this.y = this.canvas.height / 2;
+        this.angle = 90;
+        this.originalAngle = 90;
+
+        this.draw();
         const commands = commandString.split("\n");
         let delay = 0;
     
