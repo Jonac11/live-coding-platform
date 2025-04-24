@@ -103,9 +103,9 @@ Steps to Install & Test
 - **Category-Based Organization**: Blocks for logic, loops, math, and car control.
 
 - **Local Hosting**: Easily test and run the platform locally.
-- 
+  
 - **Visualizer**: A window on the platform that displays an FPV from the car's camera.
-- 
+  
 - **Simulation**: Use a simulated car if a physical car is not accessible.
 
 
