@@ -53,6 +53,7 @@ Steps to Install & Test
 **Backend**:
 - Flask v3.1.0
 - ⁠Python v3.12.6
+- ROS (alt)
 
 **Hardware**:
 - PiCar-X
