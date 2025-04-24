@@ -78,6 +78,8 @@ Steps to Install & Test
 **Math:** Perform arithmetic operations.
 
 **Car Movement:** Move Forward, Backward, Turn Left, Turn Right, Center, Stop.
+**Sensor Blocks:** Track line, Car (on, left of, right of, off) Line, Obstacle Detected, Cliff detected, Color Detected, Face Detected
+
 
 **Run Code:**
 - Click the "Run Code" button to send the generated Python code to the Flask server.
@@ -96,7 +98,7 @@ Steps to Install & Test
 
 - **Real-Time Control**: Execute Python scripts on the RC car instantly via a Flask API.
 
-- **Custom Blocks**: Special blocks for controlling RC car movements.
+- **Custom Blocks**: Special blocks for controlling RC car movements and sensors.
 
 - **Category-Based Organization**: Blocks for logic, loops, math, and car control.
 
