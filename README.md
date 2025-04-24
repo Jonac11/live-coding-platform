@@ -10,9 +10,10 @@ The Web-Based Live Coding Platform is an educational tool designed to teach K-12
 
 - Created a web-based platform 
 - Integrated Blockly API with the platform
-- Created custom movement blocks 
+- Created custom sensor and movement blocks
 - Connected the RC Car with Raspberry Pi OS
 - Connected Raspberry Pi OS with the platform (sending information over Flask server).
+- Created a visualizer and simulator
 - **Result:** Made a web-based platform that uses movement blocks to control the RC Car
 
 
@@ -76,14 +77,16 @@ Steps to Install & Test
 **Loops:** Repeat actions.
 **Math:** Perform arithmetic operations.
 
-**Car Movement:** Move Forward, Backward, Turn Left, Turn Right, Stop.
+**Car Movement:** Move Forward, Backward, Turn Left, Turn Right, Center, Stop.
 
 **Run Code:**
 - Click the "Run Code" button to send the generated Python code to the Flask server.
 - The server processes the code and sends instructions to the RC car via the Raspberry Pi.
+- If no RC car, the instructions will be sent to the simulation.
 
 **Control the RC Car:**
 - Watch the RC car execute the movements defined in your code in real-time.
+- If no RC car, the simulated car will move accordingly.
 
 ## Features
 
@@ -98,7 +101,9 @@ Steps to Install & Test
 - **Category-Based Organization**: Blocks for logic, loops, math, and car control.
 
 - **Local Hosting**: Easily test and run the platform locally.
+- 
 - **Visualizer**: A window on the platform that displays an FPV from the car's camera.
+- 
 - **Simulation**: Use a simulated car if a physical car is not accessible.
 
 
@@ -106,7 +111,7 @@ Steps to Install & Test
 
 ## Screenshot
 
-##![Platform Interface Screenshot](https://github.com/user-attachments/assets/eef22c7a-f143-4725-888a-1d7c60647107)
+![Platform Interface Screenshot](https://github.com/user-attachments/assets/eef22c7a-f143-4725-888a-1d7c60647107)
 
 ![Image](https://github.com/user-attachments/assets/df0e4ed1-9427-4506-ba0a-75c4dd2d1e7b)
 
@@ -136,7 +141,7 @@ https://github.com/user-attachments/assets/7e71a878-c321-4b40-830d-9d410a956f0e
 
 ## Changelog
 
-**Version 0.2**
+**Version 0.3**
 
 ## Conclusion
 Overall, first semester work was quite challenging but our team has set a base line for Senior Design II where we plan to complete the following as well as refine and revise what we have currently finished: 
