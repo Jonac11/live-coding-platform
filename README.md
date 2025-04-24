@@ -111,7 +111,7 @@ Steps to Install & Test
 
 
 
-## Screenshot
+## Screenshots
 
 ![Platform Interface Screenshot](https://github.com/user-attachments/assets/eef22c7a-f143-4725-888a-1d7c60647107)
 
@@ -123,6 +123,7 @@ Steps to Install & Test
 
 ## Demo Video
 
+[![Watch the Overview Video](https://github.com/user-attachments/assets/23ec6a00-c42e-4a51-b55c-6ed8cb1fa12f)](https://drive.google.com/file/d/1JcDFBUSRmAmsrxEFKhhAVvD9q78ufhxa/view?usp=drive_link)
 
 https://github.com/user-attachments/assets/7e71a878-c321-4b40-830d-9d410a956f0e
 
